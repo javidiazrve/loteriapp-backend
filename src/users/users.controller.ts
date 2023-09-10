@@ -21,13 +21,4 @@ export class UsersController {
         return await this.usersService.getUsers();     
     }
 
-    @Post()
-    @ApiOperation({ 
-        summary: "Create New Users",
-        description: "Create a new user.",
-    })
-    async createUser(@Body() newUserDto: NewUserDto){
-        await this.usersService.createUser(newUserDto);
-    }
-
 }

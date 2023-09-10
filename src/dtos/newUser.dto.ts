@@ -44,7 +44,7 @@ export class NewUserDto {
         type: String,
         description: "The user email",
         required: true,
-        example: "Pedro Perez"
+        example: "pedroperez@gmail.com"
     })
     @IsDefined({message: "Email is required"})
     @IsEmail({},{message: "Email is not valid"})
@@ -74,7 +74,7 @@ export class NewUserDto {
         type: String,
         description: "The user TRC20 Wallet(TRON)",
         required: true,
-        example: "THAtuHjeNNbtVrQUniVNnAHXu6YRMAftTL"
+        example: "THAtuHjeNNbtVrQUniVNnAHXu6YRMAftZT"
     })
     @IsDefined({message: "TrxWallet is required"})
     @IsString({message: "TrxWallet has to be string"})

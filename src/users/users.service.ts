@@ -5,37 +5,31 @@ import { NewUserDto } from 'src/dtos/newUser.dto';
 import { User } from 'src/schemas/user.schema';
 import { hash } from 'bcrypt';
 import { plainToClass } from 'class-transformer';
-import { UserDto } from 'src/dtos/user.dto';
+import { UserDto } from 'src/dtos/user.dto';;
+import { MailService } from 'src/services/mail/mail.service';
+
 
 @Injectable()
 export class UsersService {
 
-    constructor(@InjectModel(User.name) private userModel: Model<User>){}
+    constructor(@InjectModel(User.name) private userModel: Model<User>, private readonly mailService: MailService){}
 
     async getUsers(){
         const users = await this.userModel.find({});
-        return users.map((user) => plainToClass(UserDto, user, {excludeExtraneousValues: true}));  
+        return users.map((user) => plainToClass(UserDto, user, {excludeExtraneousValues: true}));
     }
 
-    async createUser(newUserDto: NewUserDto){
+    async getUserById(userId: string){
+        return await this.userModel.findById(userId);
+    }
 
-        const {username, email, trxWallet, password} = newUserDto;
+    async getUserWhere(query: any){
+        return await this.userModel.findOne(query);
+    }
 
-        const usedUser = await this.userModel.findOne({$or: [{username},{email},{trxWallet}]});
-
-        if(usedUser){
-            let property = "";
-            if(usedUser.username === username) property = "Username";
-            else if(usedUser.email === email) property = "Email"
-            else if(usedUser.trxWallet === trxWallet) property = "Tron Wallet"
-
-            throw new HttpException(`${property} already in use`, HttpStatus.CONFLICT);
-        }
-
-        newUserDto.password = await hash(password, 10);
+    async newUser(newUserDto: NewUserDto){
 
         return await this.userModel.create(newUserDto);
-
     }
 
 }

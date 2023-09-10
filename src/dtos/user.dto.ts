@@ -1,5 +1,23 @@
-import { Exclude, Expose } from "class-transformer";
+import { Exclude, Expose, Type } from "class-transformer";
 
+export class EmailConfig{
+    @Expose()
+    emailVerified: boolean
+
+    @Exclude()
+    emailVerificationCode: string
+
+    @Exclude()
+    emailCodeExpiration: Date
+}
+
+export class UserConfig{
+
+    @Expose()
+    @Type(() => EmailConfig)
+    email: EmailConfig
+
+}
 
 export class UserDto{
 
@@ -15,7 +33,9 @@ export class UserDto{
     trxWallet: string;
     @Expose()
     birthdate: Date;
+
     @Expose()
-    creationDate: Date;
-    
+    @Type(() => UserConfig)
+    config: UserConfig;
 }
+

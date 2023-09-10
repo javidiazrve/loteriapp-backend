@@ -1,5 +1,16 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
+
+
+export class EmailConfig{
+  emailVerified: Boolean = false;
+  emailVerificationCode: String;
+  emailCodeExpiration: Date;
+}
+
+export class UserConfig {
+  email: EmailConfig;
+}
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -16,6 +27,9 @@ export class User {
 
   @Prop()
   email: string;
+
+  @Prop({type: UserConfig})
+  config: UserConfig;
 
   @Prop()
   password: string;
