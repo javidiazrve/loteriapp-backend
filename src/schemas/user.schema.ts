@@ -12,10 +12,20 @@ export class User {
   lastname: string;
 
   @Prop()
+  username: string;
+
+  @Prop()
   email: string;
 
   @Prop()
   password: string;
+
+  @Prop()
+  trxWallet: string;
+
+  @Prop()
+  birthdate: string;
+
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
