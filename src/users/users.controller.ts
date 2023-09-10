@@ -2,6 +2,8 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { NewUserDto } from 'src/dtos/newUser.dto';
+import { plainToClass, } from 'class-transformer';
+import { UserDto } from 'src/dtos/user.dto';
 
 @ApiTags('Users')
 @Controller('users')
@@ -16,7 +18,7 @@ export class UsersController {
         description: "Get all the users",
     })
     async getUsers(){
-        return await this.usersService.getUsers();
+        return await this.usersService.getUsers();     
     }
 
     @Post()
@@ -25,8 +27,7 @@ export class UsersController {
         description: "Create a new user.",
     })
     async createUser(@Body() newUserDto: NewUserDto){
-        // return await this.usersService.createUser(newUserDto);
-        return newUserDto;
+        await this.usersService.createUser(newUserDto);
     }
 
 }

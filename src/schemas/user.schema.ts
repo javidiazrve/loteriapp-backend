@@ -24,8 +24,10 @@ export class User {
   trxWallet: string;
 
   @Prop()
-  birthdate: string;
+  birthdate: Date;
 
+  @Prop({default: new Date()})
+  creationDate: Date
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
